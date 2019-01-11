@@ -10,5 +10,5 @@
 [1](https://github.com/JackyTsuuuy/Autoclicker/blob/master/1.png)
 6. 这里使用方式四，选中高亮的代码，右键->'copy'->'copy xpath'
 7. 填入代码，str_xpath后的引号内，保存，再刷新页面就可自动点击了
-[1](https://github.com/JackyTsuuuy/Autoclicker/blob/master/2.png)
+[2](https://github.com/JackyTsuuuy/Autoclicker/blob/master/2.png)
 8. 默认的间隔为1s（1000ms),可以在上方的cyce值中进行调节
