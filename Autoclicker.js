@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         AutoClicker
 // @namespace    http://gv7.me
-// @version      0.2
-// @description  自动重复点击单页面或多页面的相关元素（按钮，链接等等）
+// @version      0.2.6
+// @description  一个自动对网页元素（按钮，链接等）进行重复点击的脚本,可以利用到春节刷票，大学选课，双十一抢购等场景中。
 // @author       c0ny1,JackyTsuuuy
 // @match        *://*/*
 // @grant        none
@@ -13,24 +13,27 @@
 
 // 多少毫秒点击一次
 var cyce = 1000;
-// 方式一：通过自定义函数定位目标元素
-var isCustiom = false;
-// 方式二：通过id获取目标元素
+// 方式一：通过id定位点击元素
 var id = "";
-// 方式三：通过标题名tag,属性名attr,属性值value定位目标元素
+// 方式二：通过标签名tag,属性名attr,属性值value定位点击元素
 var tag = "";
 var attr = "";
 var value = "";
-// 方式四：通过xpath获取目标元素 e.g: var str_xpath = '//*[@id="su"]';
-var str_xpath = '//*[@id="J_LinkBuy"]';
-// 方式五：通过selector定位目标元素,e.g: var str_qs = "div .search span a";
+// 方式三：通过xpath定位点击元素 e.g: var str_xpath = '//*[@id="su"]';
+var str_xpath = '';
+// 方式四：通过selector定位点击元素,e.g: var str_qs = "div .search span a";
 var str_qs = "";
+// 方式五：通过自定义函数定位点击元素
+var isCustiom = false;
+
+
 /*
-	获取点击对象库函数
+	定位点击对象的辅助函数
 */
 function getTargetByCustom(){
-    /*请在该函数内编写自定义获取需要点击元素的代码*/
-	return undefined;
+    /*若启用方式五，请在该函数体内编写自定义定位点击元素的代码*/
+    var target;
+	return target;
 }
 
 function getTargetById(t_id){
@@ -80,28 +83,28 @@ if(isCustiom === true){
 	btn = getTargetByCustom();
 }
 
-if(trim(id) !== "" && btn === undefined){
+if(trim(id) !== "" && (btn === null | typeof(btn) !== 'object')){
 	btn = getTargetById(id);
 }
 
-if(trim(tag) !== "" && trim(attr) !== "" && value !== "" && btn === undefined){
+if(trim(tag) !== "" && trim(attr) !== "" && value !== "" && (btn === null | typeof(btn) !== 'object')){
 	btn = getTargetByTAV(tag,attr,value);
 }
 
-if(trim(str_xpath) !== "" && btn === undefined){
+if(trim(str_xpath) !== "" && (btn === null | typeof(btn) !== 'object')){
 	btn = getTargetByXpath(str_xpath)[0];
 }
 
-if(trim(str_qs) !== "" && btn === undefined){
+if(trim(str_qs) !== "" && (btn === null | typeof(btn) !== 'object')){
     btn = getTargetByQS(str_qs);
 }
 
 setInterval(function() {
-		if (btn !== undefined) {
-            console.log("[+] AutoClicker click obj tagname: " + btn.tagName);
+		if (btn !== null && typeof(btn) === 'object') {
+            console.info("[+] AutoClicker click object: " + btn.innerHTML);
 			btn.click();
 		}else{
-			console.log('[-] AutoClicker click obj is undefined!');
+			console.warn('[-] Autoclicker does not find the click object!');
 		}
 	},cyce);
 })();
